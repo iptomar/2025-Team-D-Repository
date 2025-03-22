@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 
 //Material UI (MUI) é uma biblioteca de componentes de UI para React, inspirada no Material Design do Google. 
 // O Material UI fornece componentes prontos e altamente personalizáveis para criar interfaces modernas e responsivas de forma rápida.
 import { Tabs, Tab, Box, Typography } from '@mui/material';
 
+
+//Os hooks useNavigate e useLocation pertencem ao react-router-dom.
+import { useNavigate,useLocation } from 'react-router-dom';
 
 import './HorariosAbas.css';
 
@@ -38,19 +41,61 @@ function TabPanel({ children, value, index }) {
 }
 
 function TabsHorarios() {
+ 
 
-  // Estado para controlar a aba ativa
-  //useState(0) cria um estado inicial com o valor 0 ,ou seja, a primeira aba (Turmas) está ativa.
-  //tabIndex →Valor atual do estado (qual aba está ativa).
-  //setTabIndex(newIndex) → Função para atualizar tabIndex e re-renderizar o componente.
-  //O utilziador clica na aba "Docentes" (segunda aba).
-  //O newIndex será 1, pois "Docentes" está na posição 1.
-  //O React executa:
-  //setTabIndex(1); // Atualiza tabIndex para 1
-  // O React re-renderiza o componente, agora com tabIndex = 1.
-  // Como tabIndex mudou, a aba "Docentes" agora está ativa.
-  //Quando chamamos setTabIndex(newIndex), o React atualiza o estado tabIndex com o novo valor
-  const [tabIndex, setTabIndex] = useState(0);
+  //O useNavigate permite navegar de uma rota para outra, por exemplo, de /salas para /docentes, simplesmente chamando navigate('/docentes') 
+  const navigate = useNavigate(); 
+  
+
+//Vamos supor a URL seguinte:http://localhost:3000/sobre?nome=Joao#section1
+//O objeto retornado pelo useLocation poderia ser algo parecido com
+//{
+// pathname: "/sobre",       // O caminho da URL
+// search: "?nome=Joao",     // A query string (parâmetros da URL)
+// hash: "#section1",        // A âncora (hash) da URL
+// state: null,              // Dados de estado que podem ter sido passados durante a navegação
+// key: "abc123"             // Uma chave única para a localização
+//}
+  const location = useLocation();
+
+
+  // Criação de um array chamado routes com os caminhos das rotas
+  const routes = ['/turmas', '/docentes', '/salas'];
+
+  //O valor inicial de tabIndex é -1. No contexto deste código, esse valor indica que, inicialmente, nenhuma aba está selecionada
+  const [tabIndex, setTabIndex] = useState(-1);
+
+
+  //Este hook useEffect monitoriza as mudanças na URL (location) e, se necessário, também as alterações no array routes. 
+  // Quando a URL muda (por exemplo, após o navigate ser chamado no handleChange ou por outra navegação), o useEffect é disparado. 
+  // O useEffect verifica qual é o caminho atual e atualiza o estado tabIndex de acordo com a posição desse caminho no array de rotas.
+  useEffect(() => {
+
+    //Aqui, location.pathname retorna o caminho da URL atual. Por exemplo, se o utilizador estiver na rota /salas, currentPath terá o valor "/salas"
+    const currentPath = location.pathname;
+
+    //A variável routes é um array que contém as rotas mapeadas (['/turmas', '/docentes', '/salas']). 
+    // O método indexOf procura o valor de currentPath nesse array e retorna o seu índice.
+    //Se currentPath for /salas, o foundIndex será 2 (/salas é o terceiro elemento do array).
+    //Se a rota atual não estiver presente no array, indexOf retorna -1
+    const foundIndex = routes.indexOf(currentPath);
+
+    //// Se foundIndex for -1, significa que não está em nenhuma rota mapeada,
+    // então fica sem aba selecionada.
+    setTabIndex(foundIndex); 
+  }, [location, routes]);//O useEffect é disparado sempre que o objeto location ou o array routes mudar, garantindo que a lógica de sincronização da 
+  // aba ativa seja executada quando necessário
+
+  //Quando o utilizador clica numa aba, a função handleChange é chamada fazendo duas coisas:
+  // Atualiza o estado tabIndex com o novo índice da aba selecionada.
+  //Usa o navigate para alterar a URL para a rota correspondente (usando o array routes).
+  const handleChange = (event, newIndex) => {
+    setTabIndex(newIndex);
+    ////o navigate muda a URL da aplicação para a rota que corresponde ao índice selecionado, 
+    // usando o array routes que contém os caminhos das rotas. Dessa forma, a URL e a aba ativa permanecem sincronizadas.
+    navigate(routes[newIndex]);
+  };
+
 
   return (
     <Box>
@@ -65,18 +110,10 @@ function TabsHorarios() {
           //value={tabIndex} → Controla qual a aba que está ativa no momento.
           value={tabIndex}
 
-           //O estado tabIndex é um número (0, 1 ou 2), indicando a aba ativa.
-          //Quando o utilizador clica numa aba, setTabIndex(newIndex) atualiza o estado para esse índice.
-          //Isso faz com que o conteúdo da aba mude dinamicamente.
-          //onChange → É acionado quando o utilizador clica numa aba.
-          // O newIndex muda dinamicamente conforme o utilizador clica
-          //Quando ele clica, setTabIndex(newIndex) atualiza o estado com o novo índice da aba ativa.
-          //O e(evento) contém detalhes muito específicos do clique, como:
-          // Qual elemento foi clicado (target)
-          //A posição exata do clique na tela (screenX, screenY)
-          //Se alguma tecla especial estava pressionada (ctrlKey, shiftKey, altKey) 
-          onChange={(e, newIndex) => setTabIndex(newIndex)}
-          aria-label="Basic Tabs Example"
+          //Esta propriedade indica qual a função que deve ser chamada quando o utilizador interage com as abas e muda a seleção. 
+          // Neste caso, quando o utilizador clica numa aba diferente, a função handleChange é executada para atualizar o estado da aba ativa e navegar
+          // para a rota correspondente
+          onChange={handleChange}
           className="tabs-wrapper"
           centered // <- Centraliza as abas na tela do cliente
         >
