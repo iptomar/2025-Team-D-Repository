@@ -22,6 +22,9 @@ function App() {
   }, []);
 
   return (
+
+    //Sem o BrowserRouter, os hooks de navegação, como useNavigate e useLocation, não teriam o ambiente adequado para gerenciar as rotas, 
+    // e a aplicação não conseguiria responder às mudanças de URL.
     <BrowserRouter>
       
       
