@@ -1,6 +1,5 @@
 import { useState, useEffect, use } from 'react'
 import "../styles/login.css";
-import iptLogo from "../images/ipt_logo.jpg"
 import axios from 'axios'
 
 
@@ -16,6 +15,12 @@ const Login = () => {
         e.preventDefault();
         //elimina todos os erros
         setError("");
+
+        // Verifica se os campos estão vazios
+        if (!email.trim() || !password.trim()) {
+            setError("Por favor, preencha todos os campos.");
+            return;
+        }
         
         //post no backend através de axios
         //dá post do email e da password n backend
@@ -42,14 +47,6 @@ const Login = () => {
 
   
     return (
-        <div className="loginBackground">
-            <div className='centerDiv'>
-                <img src={iptLogo}
-                 alt="Logo do Instituto Politécnico de Tomar"
-                 width= "30%"
-                />
-                <h1 className='titulo'>Horários IPT</h1>
-                
                 <div className="formulario">
                     <div className='loginSquare'>
                         {error && <p style={{ color: "red" }}>{error}</p>}
@@ -69,10 +66,6 @@ const Login = () => {
                         </form>
                     </div>
                 </div>
-            
-            </div>
-        </div>
-
     )
   }
   

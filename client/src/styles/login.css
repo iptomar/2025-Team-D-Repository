@@ -20,6 +20,8 @@
     border-radius: 4px;
     box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
     margin-top: 10px;
+    text-align: center;
+    font-family: "Titillium Web", sans-serif;
 }
 
 .forms{
