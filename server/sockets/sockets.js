@@ -120,8 +120,8 @@ const setupSockets = (server) => {
                 const addedAula = {
                     id: sheetyResponse.data.aula.id, // Use Sheety's ID!
                     day: data.newAula.day || "Monday",
-                    start: sheetyData.aula.Hora_de_inicio,
-                    end: sheetyData.aula.Hora_de_fim,
+                    start: sheetyData.aula.hora_de_inicio,
+                    end: sheetyData.aula.hora_de_fim,
                     subject: data.newAula.disciplina,
                     location: data.newAula.sala,
                     ...data.newAula
@@ -133,7 +133,7 @@ const setupSockets = (server) => {
                 // Respond to client
                 socket.emit("add-aula-response", {
                     success: true,
-                    data: addedAula
+                    data: sheetyData
                 });
         
                 // Broadcast update

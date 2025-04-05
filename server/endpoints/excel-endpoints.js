@@ -1,4 +1,6 @@
-const express = require('express');
+// Porquê usar isto se já tenho os sockets a funcionar??
+
+/*const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 
@@ -86,8 +88,7 @@ router.post('/adicionar-aula', async (req, res) => {
             ID_Tipologia: 1,
             Hora_de_inicio: 0,
             Hora_de_fim: 0,
-            Duracao: duracao,
-            ID: id
+            Duracao: duracao
         }
       }
     );
@@ -111,3 +112,4 @@ router.post('/adicionar-aula', async (req, res) => {
 });
 
 module.exports = router;
+*/

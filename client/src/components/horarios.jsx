@@ -3,6 +3,7 @@ import { DndContext, useDraggable, useDroppable } from "@dnd-kit/core";
 import { restrictToWindowEdges } from "@dnd-kit/modifiers";
 import "../styles/horarios.css"; // Ensure the correct relative path to the CSS file// Importa o ficheiro de CSS
 import socket from '../utils/socket'
+import AdicionarAulaButton from "./AdicionarAulaButton";
 
 // Definição dos dias da semana
 const diasSemana = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
@@ -187,45 +188,6 @@ function Horarios() {
     setErro("");
   };
 
-  const adicionarAula = () => {
-    const { disciplina, sala, professor, duracao } = novaAula;
-
-    if (!disciplina || !sala || !professor || !duracao || !escola || !curso || !ano || !turma) {
-        alert("Preencha todos os campos antes de adicionar a aula!");
-        return;
-    }
-
-    console.log("📤 Emitting add-aula event", {
-        newAula: {
-            disciplina,
-            sala,
-            professor,
-            duracao,
-            escola,
-            curso,
-            ano,
-            turma
-        }
-    });
-
-    // Emit to server
-    socket.emit("add-aula", {
-        newAula: {
-            disciplina,
-            sala,
-            professor,
-            duracao,
-            escola,
-            curso,
-            ano,
-            turma
-        }
-    });
-
-    // Clear form
-    setNovaAula({ disciplina: "", sala: "", professor: "", duracao: "1h" });
-  };
-
   const iniciarEdicao = (aula) => {
     const [disciplina, sala, professor, duracao] = aula
       .match(/^(.*?) - (.*?) - (.*?) \((.*?)\)$/)
@@ -378,7 +340,15 @@ function Horarios() {
                       <option value="3h">3h</option>
                       <option value="4h">4h</option>
                     </select>
-                    <button onClick={adicionarAula}>Adicionar Aula</button>
+                    <AdicionarAulaButton
+                      novaAula={novaAula}
+                      escola={escola}
+                      curso={curso}
+                      ano={ano}
+                      turma={turma}
+                      socket={socket}
+                      setNovaAula={setNovaAula}
+                    />
                   </div>
                 </div>
 

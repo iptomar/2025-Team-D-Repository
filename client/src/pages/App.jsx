@@ -5,7 +5,7 @@ import { useSocket } from '../utils/useSocket'
 
 function App() {
   // base endpoint message
-  const [baseMessage, setBaseMessage] = useState("fethcing server's base endpoint...")
+  const [baseMessage, setBaseMessage] = useState("fetching server's base endpoint...")
   const { socketMsg } = useSocket()
 
   // fetch base endpoint message
