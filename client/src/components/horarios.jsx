@@ -2,6 +2,7 @@ import { useState } from "react";
 import { DndContext, useDraggable, useDroppable } from "@dnd-kit/core";
 import { restrictToWindowEdges } from "@dnd-kit/modifiers";
 import "../styles/horarios.css"; // Ensure the correct relative path to the CSS file// Importa o ficheiro de CSS
+import socket from '../utils/socket'
 
 // Definição dos dias da semana
 const diasSemana = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
@@ -189,14 +190,39 @@ function Horarios() {
   const adicionarAula = () => {
     const { disciplina, sala, professor, duracao } = novaAula;
 
-    if (!disciplina || !sala || !professor || !duracao) {
-      alert("Preencha todos os campos antes de adicionar a aula.");
-      return;
+    if (!disciplina || !sala || !professor || !duracao || !escola || !curso || !ano || !turma) {
+        alert("Preencha todos os campos antes de adicionar a aula!");
+        return;
     }
 
-    const novaAulaTexto = `${disciplina} - ${sala} - ${professor} (${duracao})`;
-    setDisponiveis((prev) => [...prev, novaAulaTexto]);
+    console.log("📤 Emitting add-aula event", {
+        newAula: {
+            disciplina,
+            sala,
+            professor,
+            duracao,
+            escola,
+            curso,
+            ano,
+            turma
+        }
+    });
 
+    // Emit to server
+    socket.emit("add-aula", {
+        newAula: {
+            disciplina,
+            sala,
+            professor,
+            duracao,
+            escola,
+            curso,
+            ano,
+            turma
+        }
+    });
+
+    // Clear form
     setNovaAula({ disciplina: "", sala: "", professor: "", duracao: "1h" });
   };
 
