@@ -1,46 +1,45 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Usado para navegação
 import "../../styles/edit_remove_Forms.css";
 import bin from '../../images/bin.png';
 import pencil from '../../images/pencil.png';
 import ConfirmacaoModal from './Confirmacao';
-import ModalEdicao from './EditModal';
+import ModalEdicao from './EditModal'; // Componente do modal de edição
 
-// Componente principal para listar, editar e remover unidades curriculares
-const Curso_edit_remove = () => {
-  // Estados para controlar dados, modais e campos de edição
+// Componente principal responsável pela listagem, edição e remoção de Unidades Curriculares
+const UCEditRemove = () => {
+  const navigate = useNavigate(); // Usado para navegação
   const [dados, setDados] = useState([]);
   const [modalAberta, setModalAberta] = useState(false);
   const [modalEdicaoAberta, setModalEdicaoAberta] = useState(false);
   const [idParaRemover, setIdParaRemover] = useState(null);
   const [editarItemId, setEditarItemId] = useState(null);
   const [editarCampos, setEditarCampos] = useState({});
-  const [tituloModal, setTituloModal] = useState('Editar Curso');
+  const [tituloModal, setTituloModal] = useState('Editar UC');
 
   // Simula o carregamento inicial dos dados
   useEffect(() => {
     const dadosSimulados = [
-      { id: 1, nome: "Programação Web", horas: "5", codCurso: "911"},
-      { id: 2, nome: "Programação Java", horas: "4", codCurso: "911"},
-      { id: 3, nome: "Análise Matemática", horas: "10", codCurso: "911"},
-      { id: 4, nome: "Gestão de Projetos", horas: "4", codCurso: "911"},
-      { id: 5, nome: "Sistemas Digitais", horas: "5", codCurso: "911"}
+      { id: 1, nome: "Programação Web", horas: "5", codUC: "911" },
+      { id: 2, nome: "Programação Java", horas: "4", codUC: "911" },
+      { id: 3, nome: "Análise Matemática", horas: "10", codUC: "911" },
+      { id: 4, nome: "Gestão de Projetos", horas: "4", codUC: "911" },
+      { id: 5, nome: "Sistemas Digitais", horas: "5", codUC: "911" }
     ];
     setDados(dadosSimulados);
   }, []);
 
-  // Abrir o modal de confirmação e guardar o ID do item a remover
+  // Funções auxiliares para abrir/fechar modais e manipular dados
   const abrirModal = (id) => {
     setIdParaRemover(id);
     setModalAberta(true);
   };
 
-  // Fechar o modal de confirmação
   const fecharModal = () => {
     setModalAberta(false);
     setIdParaRemover(null);
   };
 
-  // Confirmar e aplicar a remoção do item
   const confirmarRemocao = () => {
     if (idParaRemover !== null) {
       setDados(dados.filter(item => item.id !== idParaRemover));
@@ -48,28 +47,24 @@ const Curso_edit_remove = () => {
     fecharModal();
   };
 
-  // Abrir o modal de edição e preencher os campos com os dados do item
   const abrirModalEdicao = (item) => {
     setEditarItemId(item.id);
     setEditarCampos(item);
-    setTituloModal('Editar Unidade Curricular');  
+    setTituloModal('Editar UC');
     setModalEdicaoAberta(true);
   };
 
-  // Fechar o modal de edição e limpar os dados
   const fecharModalEdicao = () => {
     setModalEdicaoAberta(false);
     setEditarItemId(null);
     setEditarCampos({});
   };
 
-  // Atualizar campos do formulário conforme o utilizador edita
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditarCampos(prev => ({ ...prev, [name]: value }));
   };
 
-  // Confirmar e aplicar as alterações no item editado
   const confirmarEdicao = () => {
     setDados(dados.map(item => item.id === editarItemId ? editarCampos : item));
     fecharModalEdicao();
@@ -77,13 +72,25 @@ const Curso_edit_remove = () => {
 
   return (
     <div className="lista-container">
+      {/* Adicionar o botão Criar no topo */}
+      <div className="page-header">
+        <div>
+          <input type="text" placeholder="🔍 Procurar" className="input-search" />
+          <button 
+            onClick={() => navigate("/create-uc")} // Navega para o formulário de criação de UC
+            className="botao-create">
+            Criar
+          </button>
+        </div>
+      </div>
+
       <div className="lista">
         {dados.map((item) => (
           <div key={item.id} className="card">
             <div className="card-info">
               <h3>{item.nome}</h3>
               <p>Horas: {item.horas}</p>
-              <p>Código do Curso: {item.codCurso}</p>
+              <p>Código da UC: {item.codUC}</p>
               <button className='btEdit' onClick={() => abrirModalEdicao(item)}>
                 <img src={pencil} alt="Editar" width="20" height="20" />
               </button>
@@ -113,4 +120,4 @@ const Curso_edit_remove = () => {
   );
 };
 
-export default Curso_edit_remove;
+export default UCEditRemove;

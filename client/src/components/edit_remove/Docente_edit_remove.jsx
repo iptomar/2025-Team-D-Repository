@@ -1,33 +1,30 @@
-// Importações de dependências, estilos, imagens e componentes auxiliares
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Importa o useNavigate para navegação
 import "../../styles/edit_remove_Forms.css";
 import bin from '../../images/bin.png';
 import pencil from '../../images/pencil.png';
 import ConfirmacaoModal from './Confirmacao';
 import ModalEdicao from './EditModal'; 
 
-// Componente principal que permite listar, editar e remover docentes
-const Curso_edit_remove = () => {
-  // Estados para controlar dados, modais e campos de edição
+const DocenteEditRemove = () => {
+  const navigate = useNavigate(); // Usado para navegação
   const [dados, setDados] = useState([]);
   const [modalAberta, setModalAberta] = useState(false);
   const [modalEdicaoAberta, setModalEdicaoAberta] = useState(false);
   const [idParaRemover, setIdParaRemover] = useState(null);
   const [editarItemId, setEditarItemId] = useState(null);
   const [editarCampos, setEditarCampos] = useState({});
-
-  // Título do modal de edição
   const [tituloModal, setTituloModal] = useState('Editar Docente'); 
 
-  // Carrega os dados simulados ao iniciar
+  // Carrega os dados simulados
   useEffect(() => {
     const dadosSimulados = [
-      { id: 1, nome: "André Benquerer", email: "andre_benquerer@ipt.pt", password: "1234"},
-      { id: 2, nome: "Daniel Afonso", email: "daniel_afonso@ipt.pt", password: "1234"},
-      { id: 3, nome: "Diogo Cardeira", email: "diogo_cardeira@ipt.pt", password: "1234"},
-      { id: 4, nome: "Diogo Larangeira", email: "diogo_larangeira@ipt.pt", password: "1234"},
-      { id: 5, nome: "Guilherme Simões", email: "guilherme_simoes@ipt.pt", password: "1234"},
-      { id: 6, nome: "Rúben Dias", email: "ruben_dias@ipt.ptH", password: "1234"}
+      { id: 1, nome: "André Benquerer", email: "andre_benquerer@ipt.pt", password: "1234" },
+      { id: 2, nome: "Daniel Afonso", email: "daniel_afonso@ipt.pt", password: "1234" },
+      { id: 3, nome: "Diogo Cardeira", email: "diogo_cardeira@ipt.pt", password: "1234" },
+      { id: 4, nome: "Diogo Larangeira", email: "diogo_larangeira@ipt.pt", password: "1234" },
+      { id: 5, nome: "Guilherme Simões", email: "guilherme_simoes@ipt.pt", password: "1234" },
+      { id: 6, nome: "Rúben Dias", email: "ruben_dias@ipt.pt", password: "1234" }
     ];
     setDados(dadosSimulados);
   }, []);
@@ -81,6 +78,13 @@ const Curso_edit_remove = () => {
 
   return (
     <div className="lista-container">
+      <div className="page-header">
+        <div>
+          <input type="text" placeholder="🔍 Procurar" className="input-search" />
+          <button onClick={() => navigate("/create-docente")} className="botao-create">Criar</button> {/* Botão Criar */}
+        </div>
+      </div>
+
       <div className="lista">
         {dados.map((item) => (
           <div key={item.id} className="card">
@@ -117,4 +121,4 @@ const Curso_edit_remove = () => {
   );
 };
 
-export default Curso_edit_remove;
+export default DocenteEditRemove;
