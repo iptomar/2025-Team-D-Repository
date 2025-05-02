@@ -3,9 +3,9 @@ import { Routes, Route } from 'react-router-dom';
 import BackOffice from '../pages/BackOffice';
 import Docentes from '../pages/Docentes';
 import Cursos from '../pages/Cursos';
-import UnidadesCurriculares from '../pages/UnidadesCurriculares';
+import UnidadesCurriculares from '../pages/UCs.jsx';
 import Escolas from '../pages/Escolas';
-import Salas from '../pages/Salas';
+import Salas from '../pages/Salas.jsx';
 
 const Router = () => {
   return (

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import "../../styles/edit_remove_Forms.css";
-import bin from '../../images/bin.png';
-import pencil from '../../images/pencil.png';
-import ConfirmacaoModal from './Confirmacao';
-import ModalEdicao from './EditModal';
+import "../styles/edit_remove_Forms.css";
+import bin from '../images/bin.png';
+import pencil from '../images/pencil.png';
+import ConfirmacaoModal from '../components/edit_remove/Confirmacao';
+import ModalEdicao from '../components/edit_remove/EditModal';
 
 // Componente principal para listar, editar e remover unidades curriculares
 const Curso_edit_remove = () => {
