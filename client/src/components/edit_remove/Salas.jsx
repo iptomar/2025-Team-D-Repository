@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import "../styles/edit_remove_Forms.css";
-import bin from '../images/bin.png';
-import pencil from '../images/pencil.png';
-import ConfirmacaoModal from '../components/edit_remove/Confirmacao';
-import ModalEdicao from '../components/edit_remove/EditModal';
+import "../../styles/edit_remove_Forms.css";
+import bin from '../../images/bin.png';
+import pencil from '../../images/pencil.png';
+import ConfirmacaoModal from './Confirmacao';
+import ModalEdicao from './EditModal'; 
 
-// Componente principal para listar, editar e remover unidades curriculares
+// Componente principal para listar, editar e remover salas
 const Curso_edit_remove = () => {
   // Estados para controlar dados, modais e campos de edição
   const [dados, setDados] = useState([]);
@@ -14,33 +14,33 @@ const Curso_edit_remove = () => {
   const [idParaRemover, setIdParaRemover] = useState(null);
   const [editarItemId, setEditarItemId] = useState(null);
   const [editarCampos, setEditarCampos] = useState({});
-  const [tituloModal, setTituloModal] = useState('Editar Curso');
+  const [tituloModal, setTituloModal] = useState('Editar Sala'); 
 
-  // Simula o carregamento inicial dos dados
+  // Carrega dados simulados ao montar o componente
   useEffect(() => {
     const dadosSimulados = [
-      { id: 1, nome: "Programação Web", horas: "5", codCurso: "911"},
-      { id: 2, nome: "Programação Java", horas: "4", codCurso: "911"},
-      { id: 3, nome: "Análise Matemática", horas: "10", codCurso: "911"},
-      { id: 4, nome: "Gestão de Projetos", horas: "4", codCurso: "911"},
-      { id: 5, nome: "Sistemas Digitais", horas: "5", codCurso: "911"}
+      { id: 1, nome: "B255", escola: "2"},
+      { id: 2, nome: "B128", escola: "1"},
+      { id: 3, nome: "O105", escola: "1"},
+      { id: 4, nome: "I174", escola: "2"},
+      { id: 5, nome: "10", escola: "3"}
     ];
     setDados(dadosSimulados);
   }, []);
 
-  // Abrir o modal de confirmação e guardar o ID do item a remover
+  // Abre o modal de confirmação e define o ID da sala a remover
   const abrirModal = (id) => {
     setIdParaRemover(id);
     setModalAberta(true);
   };
 
-  // Fechar o modal de confirmação
+  // Fecha o modal de confirmação e limpa o ID
   const fecharModal = () => {
     setModalAberta(false);
     setIdParaRemover(null);
   };
 
-  // Confirmar e aplicar a remoção do item
+  // Remove a sala confirmada e fecha o modal
   const confirmarRemocao = () => {
     if (idParaRemover !== null) {
       setDados(dados.filter(item => item.id !== idParaRemover));
@@ -48,28 +48,28 @@ const Curso_edit_remove = () => {
     fecharModal();
   };
 
-  // Abrir o modal de edição e preencher os campos com os dados do item
+  // Abre o modal de edição com os dados da sala selecionada
   const abrirModalEdicao = (item) => {
     setEditarItemId(item.id);
     setEditarCampos(item);
-    setTituloModal('Editar Unidade Curricular');  
+    setTituloModal('Editar Sala');  
     setModalEdicaoAberta(true);
   };
 
-  // Fechar o modal de edição e limpar os dados
+  // Fecha o modal de edição e limpa os campos
   const fecharModalEdicao = () => {
     setModalEdicaoAberta(false);
     setEditarItemId(null);
     setEditarCampos({});
   };
 
-  // Atualizar campos do formulário conforme o utilizador edita
+  // Atualiza os campos enquanto o utilizador edita o formulário
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditarCampos(prev => ({ ...prev, [name]: value }));
   };
 
-  // Confirmar e aplicar as alterações no item editado
+  // Aplica as alterações e atualiza a lista de salas
   const confirmarEdicao = () => {
     setDados(dados.map(item => item.id === editarItemId ? editarCampos : item));
     fecharModalEdicao();
@@ -82,8 +82,7 @@ const Curso_edit_remove = () => {
           <div key={item.id} className="card">
             <div className="card-info">
               <h3>{item.nome}</h3>
-              <p>Horas: {item.horas}</p>
-              <p>Código do Curso: {item.codCurso}</p>
+              <p>Escola: {item.escola}</p>
               <button className='btEdit' onClick={() => abrirModalEdicao(item)}>
                 <img src={pencil} alt="Editar" width="20" height="20" />
               </button>
@@ -107,7 +106,7 @@ const Curso_edit_remove = () => {
         onChange={handleChange}
         campos={editarCampos}
         onSave={confirmarEdicao}
-        titulo={tituloModal}
+        titulo={tituloModal} 
       />
     </div>
   );

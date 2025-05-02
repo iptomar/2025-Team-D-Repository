@@ -1,12 +1,11 @@
-// Importações de pacotes, estilos, imagens e componentes
 import { useState, useEffect } from 'react';
-import "../styles/edit_remove_Forms.css";
-import bin from '../images/bin.png';
-import pencil from '../images/pencil.png';
-import ConfirmacaoModal from '../components/edit_remove/Confirmacao';
-import ModalEdicao from '../components/edit_remove/EditModal'; 
+import "../../styles/edit_remove_Forms.css";
+import bin from '../../images/bin.png';
+import pencil from '../../images/pencil.png';
+import ConfirmacaoModal from './Confirmacao';
+import ModalEdicao from './EditModal';
 
-// Componente principal para listar, editar e remover escolas
+// Componente principal para listar, editar e remover unidades curriculares
 const Curso_edit_remove = () => {
   // Estados para controlar dados, modais e campos de edição
   const [dados, setDados] = useState([]);
@@ -15,33 +14,33 @@ const Curso_edit_remove = () => {
   const [idParaRemover, setIdParaRemover] = useState(null);
   const [editarItemId, setEditarItemId] = useState(null);
   const [editarCampos, setEditarCampos] = useState({});
+  const [tituloModal, setTituloModal] = useState('Editar Curso');
 
-  // Título do modal de edição
-  const [tituloModal, setTituloModal] = useState('Editar Escola'); 
-
-  // Simula os dados ao iniciar o componente
+  // Simula o carregamento inicial dos dados
   useEffect(() => {
     const dadosSimulados = [
-      { id: 1, nome: "Escola Superior de Gestão de Tomar", abreviatura: "ESGT"},
-      { id: 2, nome: "Escola Superior de Técnologia de Tomar", abreviatura: "ESTT"},
-      { id: 3, nome: "Escola Superior de Técnologia de Abrantes", abreviatura: "ESTA"},
+      { id: 1, nome: "Programação Web", horas: "5", codCurso: "911"},
+      { id: 2, nome: "Programação Java", horas: "4", codCurso: "911"},
+      { id: 3, nome: "Análise Matemática", horas: "10", codCurso: "911"},
+      { id: 4, nome: "Gestão de Projetos", horas: "4", codCurso: "911"},
+      { id: 5, nome: "Sistemas Digitais", horas: "5", codCurso: "911"}
     ];
     setDados(dadosSimulados);
   }, []);
 
-  // Abre o modal de confirmação de remoção
+  // Abrir o modal de confirmação e guardar o ID do item a remover
   const abrirModal = (id) => {
     setIdParaRemover(id);
     setModalAberta(true);
   };
 
-  // Fecha o modal de remoção
+  // Fechar o modal de confirmação
   const fecharModal = () => {
     setModalAberta(false);
     setIdParaRemover(null);
   };
 
-  // Remove uma escola
+  // Confirmar e aplicar a remoção do item
   const confirmarRemocao = () => {
     if (idParaRemover !== null) {
       setDados(dados.filter(item => item.id !== idParaRemover));
@@ -49,34 +48,33 @@ const Curso_edit_remove = () => {
     fecharModal();
   };
 
-  // Abre o modal de edição com os dados da escola
+  // Abrir o modal de edição e preencher os campos com os dados do item
   const abrirModalEdicao = (item) => {
     setEditarItemId(item.id);
     setEditarCampos(item);
-    setTituloModal('Editar Escola');  
+    setTituloModal('Editar Unidade Curricular');  
     setModalEdicaoAberta(true);
   };
 
-  // Fecha o modal de edição
+  // Fechar o modal de edição e limpar os dados
   const fecharModalEdicao = () => {
     setModalEdicaoAberta(false);
     setEditarItemId(null);
     setEditarCampos({});
   };
 
-  // Atualiza os campos do formulário
+  // Atualizar campos do formulário conforme o utilizador edita
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditarCampos(prev => ({ ...prev, [name]: value }));
   };
 
-  // Salva as alterações feitas na escola
+  // Confirmar e aplicar as alterações no item editado
   const confirmarEdicao = () => {
     setDados(dados.map(item => item.id === editarItemId ? editarCampos : item));
     fecharModalEdicao();
   };
 
-  // Renderização dos cartões e modais
   return (
     <div className="lista-container">
       <div className="lista">
@@ -84,7 +82,8 @@ const Curso_edit_remove = () => {
           <div key={item.id} className="card">
             <div className="card-info">
               <h3>{item.nome}</h3>
-              <p>Abreviatura: {item.abreviatura}</p>
+              <p>Horas: {item.horas}</p>
+              <p>Código do Curso: {item.codCurso}</p>
               <button className='btEdit' onClick={() => abrirModalEdicao(item)}>
                 <img src={pencil} alt="Editar" width="20" height="20" />
               </button>
@@ -108,7 +107,7 @@ const Curso_edit_remove = () => {
         onChange={handleChange}
         campos={editarCampos}
         onSave={confirmarEdicao}
-        titulo={tituloModal} 
+        titulo={tituloModal}
       />
     </div>
   );

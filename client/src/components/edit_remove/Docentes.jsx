@@ -1,10 +1,10 @@
 // Importações de dependências, estilos, imagens e componentes auxiliares
 import { useState, useEffect } from 'react';
-import "../styles/edit_remove_Forms.css";
-import bin from '../images/bin.png';
-import pencil from '../images/pencil.png';
-import ConfirmacaoModal from '../components/edit_remove/Confirmacao';
-import ModalEdicao from '../components/edit_remove/EditModal'; 
+import "../../styles/edit_remove_Forms.css";
+import bin from '../../images/bin.png';
+import pencil from '../../images/pencil.png';
+import ConfirmacaoModal from './Confirmacao';
+import ModalEdicao from './EditModal'; 
 
 // Componente principal que permite listar, editar e remover docentes
 const Curso_edit_remove = () => {
