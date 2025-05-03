@@ -1,5 +1,5 @@
 import { useState, useEffect, use } from 'react'
-import "../../styles/createForms.css";
+import "../styles/createForms.css";
 import axios from 'axios'
 
 

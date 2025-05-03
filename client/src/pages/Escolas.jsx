@@ -1,5 +1,6 @@
 // Importações de pacotes, estilos, imagens e componentes
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import "../styles/edit_remove_Forms.css";
 import bin from '../images/bin.png';
 import pencil from '../images/pencil.png';
@@ -8,6 +9,7 @@ import ModalEdicao from '../components/edit_remove/EditModal';
 
 // Componente principal para listar, editar e remover escolas
 const Curso_edit_remove = () => {
+  const navigate = useNavigate();
   // Estados para controlar dados, modais e campos de edição
   const [dados, setDados] = useState([]);
   const [modalAberta, setModalAberta] = useState(false);
@@ -78,7 +80,16 @@ const Curso_edit_remove = () => {
 
   // Renderização dos cartões e modais
   return (
-    <div className="lista-container">
+
+     <div className="lista-container">
+      <div className="page-header">
+        <div>
+          <input type="text" placeholder="🔍 Procurar" className="input-search" />
+          <button onClick={() => navigate("/create-escola")} className="botao-create">Criar</button> {/* Botão Criar */}
+        </div>
+      </div>
+
+    
       <div className="lista">
         {dados.map((item) => (
           <div key={item.id} className="card">

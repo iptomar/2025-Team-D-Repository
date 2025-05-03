@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import "../styles/edit_remove_Forms.css";
+import { useNavigate } from 'react-router-dom';
 import bin from '../images/bin.png';
 import pencil from '../images/pencil.png';
 import ConfirmacaoModal from '../components/edit_remove/Confirmacao';
@@ -7,6 +8,7 @@ import ModalEdicao from '../components/edit_remove/EditModal'; // Componente do 
 
 // Componente principal responsável pela listagem, edição e remoção de cursos
 const Curso_edit_remove = () => {
+  const navigate = useNavigate();
   // Estados para controlar dados, modais e campos de edição
   const [dados, setDados] = useState([]);
   const [modalAberta, setModalAberta] = useState(false);
@@ -74,6 +76,13 @@ const Curso_edit_remove = () => {
 
   return (
     <div className="lista-container">
+      <div className="page-header">
+        <div>
+          <input type="text" placeholder="🔍 Procurar" className="input-search" />
+          <button onClick={() => navigate("/create-curso")} className="botao-create">Criar</button> {/* Botão Criar */}
+        </div>
+      </div>
+    
       <div className="lista">
         {dados.map((item) => (
           <div key={item.id} className="card">
