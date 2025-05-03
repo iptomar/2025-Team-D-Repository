@@ -1,5 +1,6 @@
-// Importações de dependências, estilos, imagens e componentes auxiliares
+// Importações de pacotes, estilos, imagens e componentes
 import { useState, useEffect } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 import "../styles/edit_remove_Forms.css";
 import bin from '../images/bin.png';
@@ -7,9 +8,10 @@ import pencil from '../images/pencil.png';
 import ConfirmacaoModal from '../components/edit_remove/Confirmacao';
 import ModalEdicao from '../components/edit_remove/EditModal'; 
 
-// Componente principal que permite listar, editar e remover docentes
+
+// Componente principal para listar, editar e remover escolas
 const Curso_edit_remove = () => {
-  const navigate = useNavigate(); // Usado para navegação
+  const navigate = useNavigate();
   // Estados para controlar dados, modais e campos de edição
   const [dados, setDados] = useState([]);
   const [modalAberta, setModalAberta] = useState(false);
@@ -19,17 +21,14 @@ const Curso_edit_remove = () => {
   const [editarCampos, setEditarCampos] = useState({});
 
   // Título do modal de edição
-  const [tituloModal, setTituloModal] = useState('Editar Docente'); 
+  const [tituloModal, setTituloModal] = useState('Editar Escola'); 
 
-  // Carrega os dados simulados ao iniciar
+  // Simula os dados ao iniciar o componente
   useEffect(() => {
     const dadosSimulados = [
-      { id: 1, nome: "André Benquerer", email: "andre_benquerer@ipt.pt", password: "1234"},
-      { id: 2, nome: "Daniel Afonso", email: "daniel_afonso@ipt.pt", password: "1234"},
-      { id: 3, nome: "Diogo Cardeira", email: "diogo_cardeira@ipt.pt", password: "1234"},
-      { id: 4, nome: "Diogo Larangeira", email: "diogo_larangeira@ipt.pt", password: "1234"},
-      { id: 5, nome: "Guilherme Simões", email: "guilherme_simoes@ipt.pt", password: "1234"},
-      { id: 6, nome: "Rúben Dias", email: "ruben_dias@ipt.ptH", password: "1234"}
+      { id: 1, nome: "Escola Superior de Gestão de Tomar", abreviatura: "ESGT"},
+      { id: 2, nome: "Escola Superior de Técnologia de Tomar", abreviatura: "ESTT"},
+      { id: 3, nome: "Escola Superior de Técnologia de Abrantes", abreviatura: "ESTA"},
     ];
     setDados(dadosSimulados);
   }, []);
@@ -40,13 +39,13 @@ const Curso_edit_remove = () => {
     setModalAberta(true);
   };
 
-  // Fecha o modal de confirmação
+  // Fecha o modal de remoção
   const fecharModal = () => {
     setModalAberta(false);
     setIdParaRemover(null);
   };
 
-  // Remove o docente selecionado
+  // Remove uma escola
   const confirmarRemocao = () => {
     if (idParaRemover !== null) {
       setDados(dados.filter(item => item.id !== idParaRemover));
@@ -54,11 +53,11 @@ const Curso_edit_remove = () => {
     fecharModal();
   };
 
-  // Abre o modal de edição e preenche os campos
+  // Abre o modal de edição com os dados da escola
   const abrirModalEdicao = (item) => {
     setEditarItemId(item.id);
     setEditarCampos(item);
-    setTituloModal('Editar Docente');  
+    setTituloModal('Editar Escola');  
     setModalEdicaoAberta(true);
   };
 
@@ -69,27 +68,28 @@ const Curso_edit_remove = () => {
     setEditarCampos({});
   };
 
-  // Atualiza os campos conforme o usuário digita
+  // Atualiza os campos do formulário
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditarCampos(prev => ({ ...prev, [name]: value }));
   };
 
-  // Salva as alterações feitas no docente
+  // Salva as alterações feitas na escola
   const confirmarEdicao = () => {
     setDados(dados.map(item => item.id === editarItemId ? editarCampos : item));
     fecharModalEdicao();
   };
 
+  // Renderização dos cartões e modais
   return (
-    <div className="lista-container">
+
+     <div className="lista-container">
       <div className="page-header">
         <div>
           <input type="text" placeholder="🔍 Procurar" className="input-search" />
-          <button onClick={() => navigate("/create-docente")} className="botao-create">Criar</button> {/* Botão Criar */}
+          <button onClick={() => navigate("/create-escola")} className="botao-create">Criar</button> {/* Botão Criar */}
         </div>
       </div>
-
 
     
       <div className="lista">
@@ -97,8 +97,7 @@ const Curso_edit_remove = () => {
           <div key={item.id} className="card">
             <div className="card-info">
               <h3>{item.nome}</h3>
-              <p>Email: {item.email}</p>
-              <p>Password: {item.password}</p>
+              <p>Abreviatura: {item.abreviatura}</p>
               <button className='btEdit' onClick={() => abrirModalEdicao(item)}>
                 <img src={pencil} alt="Editar" width="20" height="20" />
               </button>
@@ -122,7 +121,7 @@ const Curso_edit_remove = () => {
         onChange={handleChange}
         campos={editarCampos}
         onSave={confirmarEdicao}
-        titulo={tituloModal}
+        titulo={tituloModal} 
       />
     </div>
   );

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import BackOffice from '../pages/BackOffice';
-import Docentes from '../pages/Docentes';
-import Cursos from '../pages/Cursos';
-import UnidadesCurriculares from '../pages/UCs.jsx';
-import Escolas from '../pages/Escolas';
-import Salas from '../pages/Salas.jsx';
+import Docentes from '../components/edit_remove/Docentes.jsx';
+import Cursos from '../components/edit_remove/Cursos';
+import UnidadesCurriculares from '../components/edit_remove/UCs.jsx';
+import Escolas from '../components/edit_remove/Escolas';
+import Salas from '../components/edit_remove/Salas.jsx';
 
 
 import CursoCreate from '../pages/CursoCreate.jsx'
@@ -18,9 +18,10 @@ const Router = () => {
   return (
     <Routes>
       {/* Rota inicial */}
-      <Route path="/" element={<BackOffice />} />
+      <Route path="/backoffice" element={<BackOffice />} />
 
       {/* Rotas para as páginas */}
+
       <Route path="/docentes" element={<Docentes />} />
       <Route path="/cursos" element={<Cursos />} />
       <Route path="/unidades-curriculares" element={<UnidadesCurriculares />} />
@@ -31,6 +32,7 @@ const Router = () => {
       <Route path="/create-escola" element={<EscolaCreate />} />
       <Route path="/create-uc" element={<UCCreate />} />
       <Route path="/create-sala" element={<SalaCreate />} />
+
     </Routes>
   );
 };

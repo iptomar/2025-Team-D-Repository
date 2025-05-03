@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 import "../styles/edit_remove_Forms.css";
 import bin from '../images/bin.png';
 import pencil from '../images/pencil.png';
 import ConfirmacaoModal from '../components/edit_remove/Confirmacao';
 import ModalEdicao from '../components/edit_remove/EditModal'; 
+
+
+
 
 // Componente principal para listar, editar e remover salas
 const Curso_edit_remove = () => {
