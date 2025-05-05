@@ -23,7 +23,7 @@ const DataPages = () => {
     const [showModal, setShowModal] = useState(false);
     const [termoPesquisa, setTermoPesquisa] = useState("");
 
-    // ⬇️ Sempre que muda o path, limpa a pesquisa
+    //Sempre que muda o path, limpa a pesquisa
     useEffect(() => {
         setTermoPesquisa("");
     }, [path]);
