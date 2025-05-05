@@ -25,9 +25,9 @@
 }
 
 .card h3 {
-    background-color: #3e8802;
+    background-color: #82C748;
     background-repeat: no-repeat;
-    opacity: 0.6;
+    opacity: 0.9;
     background-position: center;
     background-size: 100%;
     color: white;
@@ -89,33 +89,3 @@
     cursor: pointer;
 }
 
-.page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .input-search {
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-right: 20px; /* Espaço entre a barra de pesquisa e o botão Criar */
-  }
-  
-  .botao-create {
-    background-color: #5BC604;
-    color: white;
-    padding: 10px 20px;
-    font-weight: bold;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 17px; 
-  }
-  
-  .botao-create:hover {
-    background-color: #4aa306;
-  }

@@ -13,26 +13,27 @@ const Navbar = () => {
   return (
     <div className="navbar">
       <div className="navbar-left">
-        <img src={logo} alt="Logo IPT" className="logo" />
+        <a href="https://www.ipt.pt" target="_blank" rel="noopener noreferrer" style={{ cursor: 'default' }}>
+         <img src={logo} alt="Logo IPT" className="logo" />
+        </a>
         <span className="instituto">Instituto Politécnico de Tomar</span>
       </div>
 
-       {/* Links adicionais para o backoffice */}
-       {estaNoBackoffice && (
-            <>
-              <Link to="/backoffice/docentes">Docentes</Link>
-              <Link to="/backoffice/cursos">Cursos</Link>
-              <Link to="/backoffice/escolas">Escolas</Link>
-              <Link to="/backoffice/salas">Salas</Link>
-              <Link to="/backoffice/unidades-curriculares">Unidades Curriculares</Link>
-            </>
-          )}
+      {/* Links adicionais para o backoffice */}
+      {estaNoBackoffice && (
+        <>
+          <Link className='linksToBack' to="/backoffice">BackOffice</Link>
+          <Link className='linksToBack' to="/backoffice/docentes">Docentes</Link>
+          <Link className='linksToBack' to="/backoffice/cursos">Cursos</Link>
+          <Link className='linksToBack' to="/backoffice/unidades-curriculares">Unidades Curriculares</Link>
+          <Link className='linksToBack' to="/backoffice/escolas">Escolas</Link>
+          <Link className='linksToBack' to="/backoffice/salas">Salas</Link>
+
+        </>
+      )}
 
       <div className="navbar-right">
-        <div className="links">
-          <a href="/perfil">Perfil</a>
-          <a href="/logout">Terminar sessão</a>
-        </div>
+
       </div>
     </div>
   );

@@ -12,7 +12,7 @@ const Backoffice = () => {
         {/* Botão Docentes */}
         <button 
           className="botao" 
-          onClick={() => navigate('/docentes')}
+          onClick={() => navigate('/backoffice/docentes')}
         >
           Docentes
         </button>
@@ -20,7 +20,7 @@ const Backoffice = () => {
         {/* Botão Cursos */}
         <button 
           className="botao" 
-          onClick={() => navigate('/cursos')}
+          onClick={() => navigate('/backoffice/cursos')}
         >
           Cursos
         </button>
@@ -28,7 +28,7 @@ const Backoffice = () => {
         {/* Botão Unidades Curriculares */}
         <button 
           className="botao" 
-          onClick={() => navigate('/unidades-curriculares')}
+          onClick={() => navigate('/backoffice/unidades-curriculares')}
         >
           Unidades Curriculares
         </button>
@@ -36,7 +36,7 @@ const Backoffice = () => {
         {/* Botão Escolas */}
         <button 
           className="botao" 
-          onClick={() => navigate('/escolas')}
+          onClick={() => navigate('/backoffice/escolas')}
         >
           Escolas
         </button>
@@ -44,7 +44,7 @@ const Backoffice = () => {
         {/* Botão Salas */}
         <button 
           className="botao" 
-          onClick={() => navigate('/salas')}
+          onClick={() => navigate('/backoffice/salas')}
         >
           Salas
         </button>

@@ -1,37 +1,34 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import BackOffice from '../pages/BackOffice';
-import Docentes from '../pages/Docentes';
- import Cursos from '../pages/Cursos';
- import UnidadesCurriculares from '../pages/UCs.jsx';
- import Escolas from '../pages/Escolas';
- import Salas from '../pages/Salas.jsx';
+import Data_Pages from '../pages/Data_Pages.jsx';
 
 
-import CursoCreate from '../pages/CursoCreate.jsx'
-import DocenteCreate from '../pages/DocenteCreate.jsx'
-import EscolaCreate from '../pages/EscolaCreate.jsx'
-import UCCreate from '../pages/UCCreate.jsx'
-import SalaCreate from '../pages/SalaCreate.jsx'
+
+import CursoCreate from '../components/create/CursoCreate.jsx'
+import DocenteCreate from '../components/create/DocenteCreate.jsx'
+import EscolaCreate from '../components/create/EscolaCreate.jsx'
+import UCCreate from '../components/create/UCCreate.jsx'
+import SalaCreate from '../components/create/SalaCreate.jsx'
 
 const Router = () => {
   return (
     <Routes>
       {/* Rota inicial */}
-      <Route path="/" element={<BackOffice />} />
+      <Route path="/backoffice" element={<BackOffice />} />
 
       {/* Rotas para as páginas */}
 
-      <Route path="/docentes" element={<Docentes />} />
-      <Route path="/cursos" element={<Cursos />} />
-      <Route path="/unidades-curriculares" element={<UnidadesCurriculares />} />
-      <Route path="/escolas" element={<Escolas />} />
-      <Route path="/salas" element={<Salas />} />
-      <Route path="/create-curso" element={<CursoCreate />} />
-      <Route path="/create-docente" element={<DocenteCreate />} />
-      <Route path="/create-escola" element={<EscolaCreate />} />
-      <Route path="/create-uc" element={<UCCreate />} />
-      <Route path="/create-sala" element={<SalaCreate />} />
+      <Route path="/backoffice/docentes" element={<Data_Pages />} />
+      <Route path="/backoffice/cursos" element={<Data_Pages />} />
+      <Route path="/backoffice/unidades-curriculares" element={<Data_Pages />} />
+      <Route path="/backoffice/escolas" element={<Data_Pages />} />
+      <Route path="/backoffice/salas" element={<Data_Pages />} />
+      <Route path="/backoffice/create-docente" element={<DocenteCreate />} />
+      <Route path="/backoffice/create-curso" element={<CursoCreate />} />
+      <Route path="/backoffice/create-uc" element={<UCCreate />} />
+      <Route path="/backoffice/create-escola" element={<EscolaCreate />} />
+      <Route path="/backoffice/create-sala" element={<SalaCreate />} />
 
     </Routes>
   );

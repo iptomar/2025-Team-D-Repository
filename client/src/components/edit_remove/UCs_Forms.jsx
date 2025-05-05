@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react';
-import "../styles/edit_remove_Forms.css";
 import { useNavigate } from 'react-router-dom';
-import bin from '../images/bin.png';
-import pencil from '../images/pencil.png';
-import ConfirmacaoModal from '../components/edit_remove/Confirmacao';
-import ModalEdicao from '../components/edit_remove/EditModal'; // Componente do modal de edição
+import "../../styles/edit_remove_Forms.css";
+import bin from '../../images/bin.png';
+import pencil from '../../images/pencil.png';
+import ConfirmacaoModal from './Confirmacao';
+import ModalEdicao from './EditModal';
 
-// Componente principal responsável pela listagem, edição e remoção de cursos
-const Curso_edit_remove = () => {
-  const navigate = useNavigate();
+// Componente principal para listar, editar e remover unidades curriculares
+const UCs_edit_remove = ({ filtro }) => {
   // Estados para controlar dados, modais e campos de edição
   const [dados, setDados] = useState([]);
   const [modalAberta, setModalAberta] = useState(false);
@@ -18,32 +17,37 @@ const Curso_edit_remove = () => {
   const [editarCampos, setEditarCampos] = useState({});
   const [tituloModal, setTituloModal] = useState('Editar Curso');
 
-  // Carrega dados simulados ao iniciar o componente
+  // Simula o carregamento inicial dos dados
   useEffect(() => {
     const dadosSimulados = [
-      { id: 1, nome: "Engenharia Informática", abreviatura: "LEI", codCurso: "911", escola: "ESTT" },
-      { id: 2, nome: "Engenharia Eletrotécnica e de Computadores", abreviatura: "LEEC", codCurso: "912", escola: "ESTT" },
-      { id: 3, nome: "Engenharia Mecanica", abreviatura: "EMC", codCurso: "824", escola: "ESTT" },
-      { id: 4, nome: "Engenharia Bioquimica", abreviatura: "EBQ", codCurso: "45", escola: "ESTA" },
-      { id: 5, nome: "Engenharia Eletrotécnica ", abreviatura: "LE", codCurso: "910", escola: "ESTT" },
-      { id: 6, nome: "Recursos Humanos", abreviatura: "RH", codCurso: "885", escola: "ESGT" },
-      { id: 7, nome: "Contabilidade", abreviatura: "Ct", codCurso: "820", escola: "ESGT" },
-      { id: 8, nome: "Psicologia", abreviatura: "PS", codCurso: "42", escola: "ESCT" }
+      { id: 1, nome: "Programação Web", horas: "5", codCurso: "911" },
+      { id: 2, nome: "Programação Java", horas: "4", codCurso: "911" },
+      { id: 3, nome: "Análise Matemática", horas: "10", codCurso: "911" },
+      { id: 4, nome: "Gestão de Projetos", horas: "4", codCurso: "911" },
+      { id: 5, nome: "Sistemas Digitais", horas: "5", codCurso: "911" }
     ];
     setDados(dadosSimulados);
   }, []);
 
-  // Funções auxiliares para abrir/fechar modais e manipular dados
+  const dadosFiltrados = dados.filter((uc) =>
+    uc.nome.toLowerCase().includes(filtro.toLowerCase()) ||
+    uc.horas.toLowerCase().includes(filtro.toLowerCase())||
+    uc.codCurso.toLowerCase().includes(filtro.toLowerCase()) 
+  );
+
+  // Abrir o modal de confirmação e guardar o ID do item a remover
   const abrirModal = (id) => {
     setIdParaRemover(id);
     setModalAberta(true);
   };
 
+  // Fechar o modal de confirmação
   const fecharModal = () => {
     setModalAberta(false);
     setIdParaRemover(null);
   };
 
+  // Confirmar e aplicar a remoção do item
   const confirmarRemocao = () => {
     if (idParaRemover !== null) {
       setDados(dados.filter(item => item.id !== idParaRemover));
@@ -51,24 +55,28 @@ const Curso_edit_remove = () => {
     fecharModal();
   };
 
+  // Abrir o modal de edição e preencher os campos com os dados do item
   const abrirModalEdicao = (item) => {
     setEditarItemId(item.id);
     setEditarCampos(item);
-    setTituloModal('Editar Curso');
+    setTituloModal('Editar Unidade Curricular');
     setModalEdicaoAberta(true);
   };
 
+  // Fechar o modal de edição e limpar os dados
   const fecharModalEdicao = () => {
     setModalEdicaoAberta(false);
     setEditarItemId(null);
     setEditarCampos({});
   };
 
+  // Atualizar campos do formulário conforme o utilizador edita
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditarCampos(prev => ({ ...prev, [name]: value }));
   };
 
+  // Confirmar e aplicar as alterações no item editado
   const confirmarEdicao = () => {
     setDados(dados.map(item => item.id === editarItemId ? editarCampos : item));
     fecharModalEdicao();
@@ -76,21 +84,13 @@ const Curso_edit_remove = () => {
 
   return (
     <div className="lista-container">
-      <div className="page-header">
-        <div>
-          <input type="text" placeholder="🔍 Procurar" className="input-search" />
-          <button onClick={() => navigate("/create-curso")} className="botao-create">Criar</button> {/* Botão Criar */}
-        </div>
-      </div>
-    
       <div className="lista">
-        {dados.map((item) => (
+        {dadosFiltrados.map((item) => (
           <div key={item.id} className="card">
             <div className="card-info">
               <h3>{item.nome}</h3>
-              <p>Abreviatura: {item.abreviatura}</p>
+              <p>Horas: {item.horas}</p>
               <p>Código do Curso: {item.codCurso}</p>
-              <p>Escola: {item.escola}</p>
               <button className='btEdit' onClick={() => abrirModalEdicao(item)}>
                 <img src={pencil} alt="Editar" width="20" height="20" />
               </button>
@@ -120,5 +120,4 @@ const Curso_edit_remove = () => {
   );
 };
 
-
-export default Curso_edit_remove;
+export default UCs_edit_remove;

@@ -1,43 +1,53 @@
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #51B202;
-  }
-  
-  .navbar-left {
-    display: flex;
-    align-items: center;
-  }
-  
-  .logo {
-    height: 70px;
-    margin-right: 10px;
-  }
-  
-  .instituto {
-    font-size: 16px;
-    font-weight: 500;
-  }
-  
-  .navbar-right {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
-  
-  .links {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
-  
-  .links a {
-    text-decoration: none;
-    color: #003366;
-    font-size: 14px;
-    margin-bottom: 4px;
-  }
-  
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #82C748;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 70px;
+  margin-right: 10px;
+}
+
+.instituto {
+  font-size: 16px;
+  font-weight: 500;
+  color: rgb(255, 255, 255);
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.linksToBack {
+
+  font-weight: bold;
+  font-size: 20px;
+  font-family: "Titillium Web", sans-serif;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+
+}
+
+.linksToBack:hover {
+  /* font-size: 25px;  Aumenta o tamanho do texto 
+  text-shadow: 2px 2px 5px rgba(5, 5, 5, 0.3);*/
+  color: #436626;
+  background-color: #f0f0f0;
+  transform: scale(1.1);
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
