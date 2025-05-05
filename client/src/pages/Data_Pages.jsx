@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import '../styles/dataPage.css'
 import SearchBar from '../components/Searchbar.jsx'
 import Docentes from '../components/edit_remove/Docentes_Forms.jsx'
@@ -16,7 +16,6 @@ import SalaCreate from '../components/create/SalaCreate.jsx'
 
 const DataPages = () => {
 
-    const navigate = useNavigate();
     const location = useLocation();
     const path = location.pathname;
 
@@ -60,10 +59,6 @@ const DataPages = () => {
     } else {
         Conteudo = <p>Página não encontrada</p>;
     }
-
-    const irPaginaCreate = () => {
-        navigate(PaginaCreate);
-    };
 
     return (
         <div>
