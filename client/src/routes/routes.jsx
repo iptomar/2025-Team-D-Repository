@@ -24,11 +24,6 @@ const Router = () => {
       <Route path="/backoffice/unidades-curriculares" element={<Data_Pages />} />
       <Route path="/backoffice/escolas" element={<Data_Pages />} />
       <Route path="/backoffice/salas" element={<Data_Pages />} />
-      <Route path="/backoffice/create-docente" element={<DocenteCreate />} />
-      <Route path="/backoffice/create-curso" element={<CursoCreate />} />
-      <Route path="/backoffice/create-uc" element={<UCCreate />} />
-      <Route path="/backoffice/create-escola" element={<EscolaCreate />} />
-      <Route path="/backoffice/create-sala" element={<SalaCreate />} />
 
     </Routes>
   );

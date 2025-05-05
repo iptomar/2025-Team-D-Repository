@@ -29,7 +29,7 @@ const Docente_edit_remove = ({ filtro }) => {
       { id: 3, nome: "Diogo Cardeira", email: "diogo_cardeira@ipt.pt", password: "1234"},
       { id: 4, nome: "Diogo Larangeira", email: "diogo_larangeira@ipt.pt", password: "1234"},
       { id: 5, nome: "Guilherme Simões", email: "guilherme_simoes@ipt.pt", password: "1234"},
-      { id: 6, nome: "Rúben Dias", email: "ruben_dias@ipt.ptH", password: "1234"}
+      { id: 6, nome: "Rúben Dias", email: "ruben_dias@ipt.pt", password: "1234"}
     ];
     setDados(dadosSimulados);
   }, []);
