@@ -3,17 +3,32 @@ const router = express.Router()
 const pool = require('../db/connection.js')
 
 //FUNCIONA
-router.get('/getCurso',(req,res)=>{
-    const query = "SELECT * FROM curso"
-    pool.query(query, (err,results)=>{
-        if(err){
-            console.error("Erro na consulta à base de dados:",err)
-            return res.status(500).json({error:"Consulta à base de dados falhou"})
-        }else{
-            res.status(200).json(results)
-        }
-    })
+router.get('/getCurso', async (req,res)=>{
+
+    try{
+        const page = parseInt(req.query.page) || 1 // Página atual
+        const pageSize = parseInt(req.query.pageSize) || 10 // Itens por página
+        const offset = (page - 1) * pageSize // offset
+        const dataQuery = "SELECT * FROM curso LIMIT ? OFFSET ?"
+        const [cursos] = await pool.promise().query(dataQuery,[pageSize,offset])
+        const [countResult] = await pool.promise().query("SELECT COUNT(*) as total FROM curso")
+        const total = countResult[0].total
+        res.json({
+            data: cursos,
+            pagination:{
+                page,
+                pageSize,
+                totalItems: total,
+                totalPages: Math.ceil(total / pageSize)
+            }
+        })
+    }catch(err){
+        console.error("Erro na consulta à base de dados:",err)
+        return res.status(500).json({error:"Consulta à base de dados falhou"})
+    }
 })
+
+
 
 
 //FUNCIONA

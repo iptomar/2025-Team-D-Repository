@@ -5,16 +5,30 @@ const pool = require('../db/connection.js')
 
 //FUNCIONA
 // Endpoint para obter todas as salas
-router.get('/getSala', (req,res) => {
-    const query = "SELECT * FROM sala"
-    pool.query(query, (err, results) => {
-        if (err) {
-            console.error("Erro na consulta à base de dados:", err)
-            return res.status(500).json({ error: "Consulta à base de dados falhou" })
-        }
-        return res.status(200).json(results)
-    })
-})
+router.get('/getSala', async(req,res) => {
+    try {
+        const page = parseInt(req.query.page) || 1 // Página atual
+        const pageSize = parseInt(req.query.pageSize) || 10 // Itens por página
+        const offset = (page - 1) * pageSize // offset
+        const dataQuery = "SELECT * FROM sala LIMIT ? OFFSET ?"
+        const [salas] = await pool.promise().query(dataQuery,[pageSize,offset])
+        const [countResult] = await pool.promise().query("SELECT COUNT(*) as total FROM sala")
+        const total = countResult[0].total
+        res.json({
+            data: salas,
+            pagination:{
+                page,
+                pageSize,
+                totalItems: total,
+                totalPages: Math.ceil(total / pageSize)
+            }
+        })
+    } catch (err) {
+        console.error("Erro na consulta à base de dados:", err)
+        return res.status(500).json({ error: "Consulta à base de dados falhou" })
+    }
+}
+)
 
 //FUNCIONA
 // Endpoint para criar uma nova sala
